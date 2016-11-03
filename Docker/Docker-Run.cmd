@@ -1,1 +1,1 @@
-docker run -d -p 80:80 -v C:\docker-nugetserver\Packages:C:\Packages hbuckle/nugetserver secret
+docker run -d -p 443:443 -v C:\docker-nugetserver\Packages:C:\Packages hbuckle/nugetserver secret

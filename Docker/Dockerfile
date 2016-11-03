@@ -12,6 +12,14 @@ RUN powershell Invoke-WebRequest https://raw.githubusercontent.com/hbuckle/NuGet
 
 WORKDIR C:/Deploy
 
+RUN powershell.exe -Command " `
+    Import-Module IISAdministration; `
+    $cert = New-SelfSignedCertificate -DnsName docker-host.crucible.local -CertStoreLocation cert:\LocalMachine\My; `
+    $certHash = $cert.GetCertHash(); `
+    $sm = Get-IISServerManager; `
+    $sm.Sites['Default Web Site'].Bindings.Add('*:443:', $certHash, 'My', '0'); `
+    $sm.CommitChanges();"
+
 RUN NuGetServer.deploy.cmd, /Y
 
 ENTRYPOINT powershell.exe -executionpolicy bypass C:/Set-Key.ps1
