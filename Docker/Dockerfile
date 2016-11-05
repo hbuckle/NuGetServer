@@ -14,4 +14,6 @@ WORKDIR C:/Deploy
 
 RUN NuGetServer.deploy.cmd, /Y
 
+EXPOSE 80
+
 ENTRYPOINT powershell.exe -executionpolicy bypass C:/Set-Key.ps1
